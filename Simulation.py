@@ -2,16 +2,9 @@ import argparse
 import datetime
 import os
 import random
-from compiler.ast import flatten
-import util_functions
-import numpy as np
 
-from LinUCB import LinUCB, LinUCBDistinct
 from util_functions import readMatFile
-from GraphUCBStar import GraphUCBStar
 from NetworkUCB import NetworkUCB
-from LinTS import LinTS
-from EpsilonGreedy import EpsilonGreedy
 
 class Node:
     def __init__(self, id, label, cluster, contextFeatureVector=None):
