@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  font-family: "Verdana"
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 30px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #C0C0C0;
+}
+
+.active {
+  background-color: #C0C0C0;
+}
+
+body {
+  /*background-image: url("bg.jpg");*/
+}
+
+</style>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<ul>
+  <li><a href="home.html">Home</a></li>
+</ul></center>
+
+<div class="container-fluid">    
+  <div class="row">
+    <div class="bottom"><br/><br/>
+      <center>
+        <div style="width: 80%">
+          <a href="dataset.html">
+            <input type="button" class="btn btn-lg btn-success" value="Start Demo" data-toggle= "tooltip" title="Start Demo" style="float: right;">
+            </input>
+          </a>
+        </div>
+        <br/>
+        <br/>
+        <br/> 
+        <div style = "width: 80%; border-radius: 15px; background-color: #eae7e6; padding: 10px; font-family: 'Verdana'; text-align: justify;">
+          <center><h2 style = "font-family: 'Verdana';">Interactive Anomaly Detection on attributed networks</h2></center>
+          <br/>
+            Performing anomaly detection on attributed networks concerns with finding nodes whose patterns or behaviors deviate significantly from the majority of reference nodes. Its success can be easily found in many real-world applications such as network intrusion detection, opinion spam detection and system fault diagnosis, to name a few. Despite their empirical success, a vast majority of existing efforts are overwhelmingly performed in an unsupervised scenario due to the expensive labeling costs of ground truth anomalies. In fact, in many scenarios, a small amount of prior human knowledge of the data is often effortless to obtain, and getting it involved in the learning process has shown to be effective in advancing many important learning tasks. Additionally, since new types of anomalies may constantly arise over time especially in an adversarial environment, the interests of human expert could also change accordingly regarding to the detected anomaly types. It brings further challenges to conventional anomaly detection algorithms as they are often applied in a batch setting and are incapable to interact with the environment. To tackle the above issues, we investigate the problem of anomaly detection on attributed networks in an interactive setting by allowing the system to proactively communicate with the human expert in making a limited number of queries about ground truth anomalies. Our objective is to maximize the true anomalies presented to the human expert after a given budget is used up. Along with this line, we formulate the problem through the principled multi-armed bandit framework and develop a novel collaborative contextual bandit algorithm, named GraphUCB. In particular, our developed algorithm:
+          <ol style="background-color: #eae7e6" type="1">
+            <li> explicitly models the nodal attributes and node dependencies seamlessly in a joint framework; and </li><br/>
+            <li> handles the exploration-exploitation dilemma when querying anomalies of different types.</li>
+          </ol><br/>
+          Extensive experiments on real-world datasets show the improvement of the proposed algorithm over the state-of-the-art algorithms.
+          <br/><br/>
+          <center><img src="abstract.png"></center>
+        </div>
+      </div>
+    </center>
+  </div>
+</div>
+</body>
+</html>

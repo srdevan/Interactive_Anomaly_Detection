@@ -2,16 +2,8 @@ import argparse
 import datetime
 import os
 import random
-from compiler.ast import flatten
-import util_functions
-import numpy as np
-
-from LinUCB import LinUCB, LinUCBDistinct
 from util_functions import readMatFile
-from GraphUCBStar import GraphUCBStar
 from NetworkUCB import NetworkUCB
-from LinTS import LinTS
-from EpsilonGreedy import EpsilonGreedy
 
 class Node:
     def __init__(self, id, label, cluster, contextFeatureVector=None):
@@ -59,9 +51,8 @@ class Simulation(object):
 
         #training
         counter = {}
-
         for iter in range(1, self.training_iters + 1):
-            print iter
+            print (iter)
             for alg_name, alg in self.algorithms.items():
                 if alg_name not in counter:
                     counter[alg_name] = 0
@@ -75,7 +66,7 @@ class Simulation(object):
                     counter[alg_name] += 1
 
         for alg, cnt in counter.items():
-            print alg + ": " + str(cnt)
+            print (alg + ": " + str(cnt))
 
         for alg_name, alg in self.algorithms.items():
             alg.selected_nodes = []
@@ -84,7 +75,7 @@ class Simulation(object):
 
         # testing iteration
         for iter in range(1, self.iterations + 1):
-            print iter
+            print (iter)
             for alg_name, alg in self.algorithms.items():
 
                 pickedNode = alg.decide(self.nodes)
@@ -165,7 +156,7 @@ def getNodes(labels, attributes, classes):
         node_list.append(node)
     return node_list
 
-
+"""
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='')
     data_list = ["Embedding_BlogCatalog", "Embedding_Flickr", "Embedding_acm", "BlogCatalog_test", "Flickr_test", "acm_test"]
@@ -188,10 +179,10 @@ if __name__ == '__main__':
     # class_node_list, arm_num = getClasses(labels, attributes, classes)
     # all_nodes = flatten(class_node_list)
     all_nodes = getNodes(labels, attributes, classes)
-    print "arm_num = " + str(arm_num)
+    print ("arm_num = " + str(arm_num)
 
     context_dimension = len(attributes[0])
-    print "context_dimension = " + str(context_dimension)
+    print ("context_dimension = " + str(context_dimension))
 
     # training_nodes, all_nodes = getTrainAndAll(labels, attributes, 1)
     # true_label_list = [1]
@@ -206,3 +197,4 @@ if __name__ == '__main__':
 
     simExperiment = Simulation(iterations, algorithms, training_iters, all_nodes, arm_num, graph)
     simExperiment.run()
+"""

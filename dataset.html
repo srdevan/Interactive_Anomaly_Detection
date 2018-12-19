@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  font-family: "Verdana"
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 30px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #C0C0C0;
+}
+
+.active {
+  background-color: #C0C0C0;
+}
+body {
+  /*background-image: url("bg.jpg");*/
+}
+
+</style>
+</head>
+<body>
+<ul>
+  <li><a href="home.html">Home</a></li>
+</ul>
+<div class="container-fluid">    
+  <div class="row">
+    <div class="col-sm-4">
+    </div>
+    <div class="col-sm-4">
+      <br/><br/><br/><br/><br/><br/><br/>
+      <div style = "border-radius: 15px; background-color: #eae7e6; padding: 10px; font-family: 'Verdana'">
+        Import the dataset as a matlab file to start the algorithm. Please ensure all the nodes in the file have same number of attributes. 
+      </div>
+      <br/><br/><br/>
+        <center>
+          <form id="file_upload">
+            <input type="file" class="form-control" id="file" name="file" style="width: 300px">
+          </form>
+        </center>
+    </div>
+    <div class="col-sm-4">
+      <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+      <button class="btn btn-primary" data-toggle= "tooltip" title="Upload file" onclick = "upload()" style="background-color: grey">
+          <span class="glyphicon glyphicon-upload"></span>
+      </button>
+        <button class="btn btn-primary" data-toggle= "tooltip" title="Next" style="background-color: grey" id="Next" disabled="true">
+            <span class="glyphicon glyphicon-arrow-right"></span>
+        </button>
+        <div id="upload_response" style="color: black">
+        
+        </div>
+    </div>
+  </div>
+</div>
+    <script type="text/javascript">
+
+      function upload() {
+
+        var xhttp = new XMLHttpRequest();
+        var url = "http://localhost:5000/api/v1/upload";
+        var file_data = document.getElementById("file_upload");
+        var formData = new FormData(file_data);
+
+        xhttp.onreadystatechange = function(){
+          if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("upload_response").innerHTML = this.responseText;
+            if(this.responseText == "File Uploaded successfully!"){
+              document.getElementById("Next").disabled = false;
+              document.getElementById("Next").onclick = function() { 
+                window.location.href = "feedback.html";
+               };
+            }
+          }
+        }
+
+        xhttp.open("POST", url, true);
+        xhttp.send(formData);
+      }
+
+    </script>
+</body>
+</html>
