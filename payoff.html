@@ -242,14 +242,14 @@ body {
               node_attributes_cleaned = node_attributes.filter(Boolean) 
               var num_features = node_attributes_cleaned.length;
 
-              res = "<table border=1>";
+              res = "<table border=1 style='background-color:#D6EAF8'>";
               count = 0;
               for (i = 0; i < (num_features / 5); i++)
               {
                  res += "<tr>";
                  for (j = 0; j < 5; j++)
                  {
-                  res += "<td>" + node_attributes_cleaned[count] + "</td>";
+                  res += "<td style='padding:9px'>" + node_attributes_cleaned[count] + "</td>";
                   count += 1;
                  }
                  res += "</tr>";
@@ -269,7 +269,25 @@ body {
               data["title"] = neighborFeatures[node_ids[i]];
 
               if(i == 0){
-                data["color"] = '#e04141';
+                data["borderWidth"] = 1.5;
+                data["shadow"] = {
+                  enabled: true,
+                  size: 10
+                };
+                data["color"] = {
+                  border: '#1B2631',
+                  background: '#F1C40F'
+                };
+              } else {
+                data["borderWidth"] = 1.5;
+                data["shadow"] = {
+                  enabled: true,
+                  size: 10
+                };
+                data["color"] = {
+                  border: '#717D7E',
+                  background: '#2E86C1'
+                }
               }
               dataset.push(data);
             } 

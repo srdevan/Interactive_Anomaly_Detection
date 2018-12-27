@@ -15,6 +15,7 @@ algorithm = None
 picked_nodes = {}
 anomalies = {}
 
+#API for uploading the .mat file to the model
 @app.route("/api/v1/upload", methods=["POST"])
 def upload():
     
@@ -30,6 +31,7 @@ def upload():
 
     return "File Uploaded successfully!"
 
+#API to pick a node from the model for the user to provide feedback
 @app.route("/api/v1/nodes/pick", methods=["GET"])
 def pick_node():
     global picked_nodes
@@ -40,7 +42,7 @@ def pick_node():
     picked_node_response = { "status": "success", "data1": { "node": picked_node.id, "attribute": str(picked_node.contextFeatureVector) } }
     return app.response_class(json.dumps(picked_node_response), content_type="application/json") 
     
-
+#API to give feedback based on the node_id
 @app.route("/api/v1/nodes/feedback/<node_id>", methods=["POST"])
 def add_feedback(node_id):
     error = None
@@ -65,12 +67,14 @@ def add_feedback(node_id):
     else:
         return "Feedback updated successfully"
 
+#API to display the neighbours of the picked node
 @app.route("/api/v1/nodes/<node_id>/neighbors")
 def fetch_neighbors(node_id):
     neighbor_feature_map = algorithm.getNeighborsFeatureVectorMap(picked_nodes[int(node_id)])
     
     return app.response_class(json.dumps(format_neighbor_feature_map(neighbor_feature_map)), content_type="application/json")
 
+#API to display the true and false anomalies
 @app.route("/api/v1/anomalies")
 def fetch_anomalies():
     global anomalies
