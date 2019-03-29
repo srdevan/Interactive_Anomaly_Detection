@@ -15,10 +15,12 @@ algorithm = None
 picked_nodes = {}
 anomalies = {}
 
+data = json.load(open("user_review.json"))
+users = list(data.keys())
+
 #API for uploading the .mat file to the model
 @app.route("/api/v1/upload", methods=["POST"])
-def upload():
-    
+def upload(): 
     if "file" not in request.files:
         return "No file found!"
 
@@ -34,12 +36,13 @@ def upload():
 #API to pick a node from the model for the user to provide feedback
 @app.route("/api/v1/nodes/pick", methods=["GET"])
 def pick_node():
+    global users
     global picked_nodes
     picked_node = algorithm.decide(simExperiment.nodes)
-    print(picked_node.contextFeatureVector)
     picked_nodes[picked_node.id] = picked_node
-
-    picked_node_response = { "status": "success", "data1": { "node": picked_node.id, "attribute": str(picked_node.contextFeatureVector) } }
+    data = json.load(open("user_review.json"))
+    user = users[picked_node.id]
+    picked_node_response = { "status": "success", "data1": { "node": picked_node.id, "user": str(user), "attribute": str(picked_node.contextFeatureVector) } }
     return app.response_class(json.dumps(picked_node_response), content_type="application/json") 
     
 #API to give feedback based on the node_id
@@ -53,7 +56,6 @@ def add_feedback(node_id):
     if int(node_id) in picked_nodes.keys():
         reward = request.args.get("feedback")
         regret = optimal_reward - int(reward)
-        
         global anomalies
         anomalies[int(node_id)] = regret
 
@@ -66,6 +68,12 @@ def add_feedback(node_id):
         return app.response_class(json.dumps(temp), content_type="application/json")
     else:
         return "Feedback updated successfully"
+
+
+@app.route("/api/v1/users")
+def fetch_users():
+    global data
+    return app.response_class(json.dumps(data), content_type="application/json")
 
 #API to display the neighbours of the picked node
 @app.route("/api/v1/nodes/<node_id>/neighbors")
@@ -88,7 +96,7 @@ def fetch_anomalies():
         else:
             false_anomalies.append(key)
 
-    temp = {"data1":{"true_anomalies":true_anomalies, "false_anomalies":false_anomalies}}
+    temp = { "data1": { "true_anomalies": true_anomalies, "false_anomalies": false_anomalies } }
     return app.response_class(json.dumps(temp), content_type="application/json")
 
 @app.errorhandler(404)
@@ -108,11 +116,12 @@ def format_neighbor_feature_map(neighbor_feature_map):
     data = []
     for neighbor, features in neighbor_feature_map.items():
         data.append(node_attributes(neighbor, features))
-    
+
     return { "total_count": len(data), "data1": data, "errors": [] }
 
 def node_attributes(node, features):
-    return { "node": node, "attribute": features }
+    global users
+    return { "node": node, "attribute": features, "user": users[int(node)] }
 
 if __name__ == "__main__":
     # This is used when running locally.
